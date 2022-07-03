@@ -1,11 +1,11 @@
-#include <curl/curl.h>
 #include "../lib/functions.hpp"
 #include <cassert>
 
 int main(){
 	const std::string apikey = GetAPIKey();
-	assert(!apikey.empty());
 	const std::string request = GetRequest();
-	std::cout<<request+apikey<<std::endl;
+	assert(!(apikey.empty() || request.empty()));
+	const std::string result = PerformRequest(request+apikey);
+	std::cout<<result<<std::endl;
 	return 0;
 }
