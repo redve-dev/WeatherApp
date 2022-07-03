@@ -6,6 +6,6 @@ int main(){
 	const std::string apikey = GetAPIKey();
 	assert(!apikey.empty());
 	const std::string request = GetRequest();
-	std::cout<<request+"_"+apikey<<std::endl;
+	std::cout<<request+apikey<<std::endl;
 	return 0;
 }
