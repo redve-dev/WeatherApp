@@ -3,10 +3,6 @@
 #include <curl/curl.h>
 #include <curl/easy.h>
 
-std::string GetAPIKey(){
-	return ReadFromFile("data/APIkey");
-}
-
 std::string ReadFromFile(const std::string& filename){
 	std::ifstream f;
 	f.open(filename, std::ios::in);
@@ -23,6 +19,10 @@ std::string ReadFromFile(const std::string& filename){
 	f>>key;
 	f.close();
 	return key;
+}
+
+std::string GetAPIKey(){
+	return ReadFromFile("data/APIkey");
 }
 
 std::string GetRequest(){
