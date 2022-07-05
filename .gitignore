@@ -1,4 +1,5 @@
 bin/*
 APICaller
 APIkey
+data/APIkey
 src/*
