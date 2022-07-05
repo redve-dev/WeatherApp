@@ -1,7 +1,6 @@
 #include "../lib/functions.hpp"
 #include <cassert>
 #include <algorithm>
-#include <cassert>
 
 int main(){
 	const std::string apikey = GetAPIKey();
