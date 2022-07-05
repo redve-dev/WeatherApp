@@ -2,6 +2,7 @@
 #include <fstream>
 #include <curl/curl.h>
 #include <curl/easy.h>
+#include <algorithm>
 
 std::string ReadFromFile(const std::string& filename){
 	std::ifstream f;
@@ -46,3 +47,10 @@ std::string PerformRequest(const std::string& request){
 	}
 	return json;
 }
+
+std::string InsertDataToRequest(std::string request, const std::string& city, const std::string& key){
+	request.replace(request.find("{CITY}"),6,city);
+	request.replace(request.find("{APIKEY}"),8,key);
+	return request;
+}
+
