@@ -32,6 +32,15 @@ static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *use
 }
 
 json PerformRequest(const std::string& request){
+	if(request.empty()){
+		std::cerr<<"Invalid request\n";
+		return json();
+	}
+	if(request.find(' ') != std::string::npos){
+		std::cerr<<"invalid request\n";
+		std::cerr<<"request contains spacebar";
+		return json();
+	}
 	std::string data="";
 	CURL* curl = curl_easy_init();
 	if(curl != nullptr){
@@ -40,6 +49,10 @@ json PerformRequest(const std::string& request){
 		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &data);
 		curl_easy_perform(curl);
 		curl_easy_cleanup(curl);
+	}
+	if(data.empty()){
+		std::cout<<"Couldn't perform request\n";
+		return json();
 	}
 	return json::parse(data);
 }
