@@ -2,31 +2,28 @@
 #include <fstream>
 #include <curl/curl.h>
 #include <iostream>
+#include <sstream>
 
 std::string ReadFromFile(const std::string& filename){
-	std::ifstream f;
-	f.open(filename, std::ios::in);
-	try{
-		if(f.fail()){
-			throw std::ifstream::failure("couldn't open a file: "+filename);
-		}
-	}
-	catch(const std::ifstream::failure& e){
-		std::cerr<<e.what()<<std::endl;
+	std::ifstream f(filename);
+	if(f.fail()){
+		f.close();
+		std::cerr<<"couldn't open file: "<<filename<<std::endl;
 		return "";
 	}
 	std::string key;
-	std::getline(f,key, '\n');
+	std::stringstream buffer;
+	buffer << f.rdbuf();
 	f.close();
-	return key;
-}
-
-std::string GetAPIKey(){
-	return ReadFromFile("data/APIkey");
+	return buffer.str();
 }
 
 std::string GetRequest(){
-	return ReadFromFile("data/request");
+	json data = json::parse(ReadFromFile("data/input.json"));
+	std::string request = data["request"];
+	request.replace(request.find("{CITY}"),6,data["city"]);
+	request.replace(request.find("{APIKEY}"),8,data["APIkey"]);
+	return request;
 }
 
 static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp){
@@ -34,26 +31,19 @@ static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *use
 	return size * nmemb;
 }
 
-std::string PerformRequest(const std::string& request){
-	std::string json="";
+json PerformRequest(const std::string& request){
+	std::string data="";
 	CURL* curl = curl_easy_init();
 	if(curl != nullptr){
 		curl_easy_setopt(curl, CURLOPT_URL, request.c_str());
 		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
-		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &json);
+		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &data);
 		curl_easy_perform(curl);
 		curl_easy_cleanup(curl);
 	}
-	return json;
+	return json::parse(data);
 }
 
-std::string InsertDataToRequest(std::string request, const std::string& city, const std::string& key){
-	request.replace(request.find("{CITY}"),6,city);
-	request.replace(request.find("{APIKEY}"),8,key);
-	return request;
-}
-
-using nlohmann::json;
 json ExtractDataFromJson(const json& all){
 	json result;
 	auto take_from = [&](const json &from, const char *k){ result[k] = from[k]; };
