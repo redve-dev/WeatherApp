@@ -1,8 +1,6 @@
 #include "../lib/functions.hpp"
 #include <fstream>
 #include <curl/curl.h>
-#include <curl/easy.h>
-#include <algorithm>
 
 std::string ReadFromFile(const std::string& filename){
 	std::ifstream f;
@@ -54,3 +52,30 @@ std::string InsertDataToRequest(std::string request, const std::string& city, co
 	return request;
 }
 
+using nlohmann::json;
+json ExtractDataFromJson(const json& all){
+	const json wind = all["wind"];
+	const json main = all["main"];
+	json result;
+	auto take_from = [&](const json &from, const char *k){ result[k] = from[k]; };
+	take_from(all["coord"], "lon");
+	take_from(all["coord"], "lat");
+	take_from(all["weather"][0], "description");
+	take_from(main,"temp");
+	take_from(main,"feels_like");
+	take_from(main,"pressure");
+	take_from(main,"humidity");
+	take_from(all,"visibility");
+	take_from(wind,"speed");
+	take_from(wind,"deg");
+	result["clouds_count"] = all["clouds"]["all"]; // i want change the field name
+	// convert from kelvin to celsius, and round to 2 digits
+	auto convert_temperatures = [&result](const char* k){
+		double temp = static_cast<double>(result[k]);
+		temp = (static_cast<int>((temp-273.15f)*100));
+		result[k]=temp/100;
+	};
+	convert_temperatures("temp");
+	convert_temperatures("feels_like");
+	return result;
+}
