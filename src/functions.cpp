@@ -1,4 +1,4 @@
-#include "../lib/functions.hpp"
+#include "../include/functions.hpp"
 #include <fstream>
 #include <curl/curl.h>
 #include <iostream>
@@ -18,6 +18,7 @@ std::string ReadFromFile(const std::string& filename){
 	return buffer.str();
 }
 
+using nlohmann::json;
 std::string GetRequest(){
 	json data = json::parse(ReadFromFile("data/input.json"));
 	std::string request = data["request"];

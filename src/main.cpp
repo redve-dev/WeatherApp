@@ -1,8 +1,9 @@
-#include "../lib/functions.hpp"
+#include "../include/functions.hpp"
 #include <nlohmann/json.hpp>
 #include <iostream>
 
 int main(){
+	using nlohmann::json;
 	const std::string request = GetRequest();
 	const json data = PerformRequest(request);
 	if(data.empty()){
