@@ -1,0 +1,15 @@
+To begin using this app, you need an API key. You can get it by creating an account on openweathermap.org, and then on your profile in section "My API keys".
+Example API key looks like 4c4712a4141d261ec0ca8f903795.
+
+Enter the API key in data/input.json in quotation marks.
+
+Then enter the city where you want check weather at. Provide it in lower case, and in quotation marks.
+
+example input.json file:
+{
+	"APIkey": "4c4712a4141d261ec0ca8f903795"
+	"request": "api.openweathermap.org/data/2.5/weather?q={CITY}&id=524901&appid={APIKEY}",
+	"city": "warsaw"
+}
+
+Finally, execute APICaller binary file. The result will be result.json file in data folder.
