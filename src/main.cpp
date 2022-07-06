@@ -1,5 +1,6 @@
 #include "../lib/functions.hpp"
 #include <nlohmann/json.hpp>
+#include <iostream>
 
 int main(){
 	const std::string request = GetRequest();
