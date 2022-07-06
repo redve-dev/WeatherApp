@@ -1,5 +1,6 @@
 #include "../lib/functions.hpp"
 #include <nlohmann/json.hpp>
+#include <iostream>
 
 int main(){
 	const std::string apikey = GetAPIKey();
@@ -16,6 +17,6 @@ int main(){
 
 	const json info = json::parse(PerformRequest(request));
 	const json extracted_data = ExtractDataFromJson(info);
-	std::cout<<extracted_data<<std::endl;
+	DumpToFile(extracted_data, "result.json");
 	return 0;
 }

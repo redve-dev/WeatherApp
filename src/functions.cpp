@@ -1,6 +1,7 @@
 #include "../lib/functions.hpp"
 #include <fstream>
 #include <curl/curl.h>
+#include <iostream>
 
 std::string ReadFromFile(const std::string& filename){
 	std::ifstream f;
@@ -77,4 +78,11 @@ json ExtractDataFromJson(const json& all){
 	convert_temperatures("temp");
 	convert_temperatures("feels_like");
 	return result;
+}
+
+void DumpToFile(const json& data, std::string&& filename){
+	std::ofstream f;
+	f.open("data/"+filename);
+	f<<data;
+	f.close();
 }
