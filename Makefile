@@ -10,8 +10,11 @@ FLAGS	?= $(DFLAGS) $(LFLAGS)
 target:	$(OBJECTS)
 	$(CXX) -o APICaller $(OBJECTS) $(FLAGS)
 
-bin/%.o: src/%.cpp
+bin/%.o: src/%.cpp | bin
 	$(CXX) -c -o $@ $< $(FLAGS)
 
+bin:
+	mkdir -p $@
+
 clean:
-	rm bin/* APICaller
+	rm -rf bin APICaller
