@@ -1,1 +1,0 @@
-api.openweathermap.org/data/2.5/weather?q={CITY}&id=524901&appid={APIKEY}
