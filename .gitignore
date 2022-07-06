@@ -1,5 +1,3 @@
 bin/*
 APICaller
-APIkey
-data/APIkey
-src/*
+data/result.json
