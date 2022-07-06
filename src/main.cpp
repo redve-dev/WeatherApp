@@ -8,7 +8,7 @@ int main(){
 	const std::string request = InsertDataToRequest(GetRequest(), "katowice", apikey);
 	assert(!request.empty());
 	std::string result = PerformRequest(request);
-	std::replace(result.begin(), result.end(), ' ', '_');
+	//std::replace(result.begin(), result.end(), ' ', '_');
 	std::cout<<result;
 	return 0;
 }
