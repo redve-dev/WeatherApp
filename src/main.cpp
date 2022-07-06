@@ -1,14 +1,19 @@
 #include "../lib/functions.hpp"
 #include <cassert>
-#include <algorithm>
 
 int main(){
 	const std::string apikey = GetAPIKey();
 	assert(!apikey.empty());
+	if(apikey.empty()){
+		std::cout<<"Provide a valid openweather api key in file data/APIkey\n";
+		return 1;
+	}
 	const std::string request = InsertDataToRequest(GetRequest(), "katowice", apikey);
-	assert(!request.empty());
-	std::string result = PerformRequest(request);
-	//std::replace(result.begin(), result.end(), ' ', '_');
+	if(request.empty()){
+		std::cout<<"Couldn't get a correct request from file data/request\n";
+		return 1;
+	}
+	const std::string result = PerformRequest(request);
 	std::cout<<result;
 	return 0;
 }
