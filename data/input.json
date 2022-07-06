@@ -1,5 +1,0 @@
-{
-	"APIkey": "enter your api key here, ex. jgew5342gjeirw",
-	"request": "api.openweathermap.org/data/2.5/weather?q={CITY}&id=524901&appid={APIKEY}",
-	"city": "enter your city here, ex. warsaw"
-}
