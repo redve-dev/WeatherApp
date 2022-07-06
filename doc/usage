@@ -13,3 +13,18 @@ example input.json file:
 }
 
 Finally, execute APICaller binary file. The result will be result.json file in data folder.
+Example formatted result looks like this:
+
+{
+	"clouds_count":74,				# clouds counter
+	"deg":323,						# wind blowing direction
+	"description":"broken clouds",	# weather description
+	"feels_like":21.61,				# perceived temperatured
+	"humidity":53,					# humidity
+	"lat":50.2584,					# latitute and longitute
+	"lon":19.0275,
+	"pressure":1019,				# air pressure
+	"speed":4.09,					# wind speed
+	"temp":21.97,					# air temperatured
+	"visibility":10000				# visibility (fog etc.)
+}
