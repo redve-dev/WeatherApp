@@ -1,5 +1,5 @@
 #include <string>
-#include "json/single_include/nlohmann/json.hpp"
+#include "json.hpp"
 
 std::string ReadFromFile(const std::string& filename);
 std::string GetRequest();
