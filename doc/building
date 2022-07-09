@@ -1,12 +1,8 @@
-To build you need curl and nlohmann-json library.
+To build you need curl library.
 Then simply run "make" command.
 
-By default the program compiles with debug flags. To produce optimized binaries, change FLAGS variable in makefile
-from
-FLAGS	?= $(DFLAGS) $(LFLAGS)
-to
-FLAGS	?= $(OFLAGS) $(LFLAGS)
-
+by default it compiles with debug flags. If you want optimized binaries, use
+make release
 if you break the program, run commands:
 make clean
 make
