@@ -2,13 +2,11 @@ CXX		?= g++
 LFLAGS 	?= -lcurl
 DFLAGS	?= -pedantic -Wall -W -Wextra -Werror
 OFLAGS 	?= -O2 -pipe -march=native
+CFLAGS	?= -std=c++17
 OBJECTS	?= bin/functions.o bin/main.o
 
-#change to OFLAGS to compile optimized binaries. DFLAGS stands for debugging
-FLAGS	?= $(DFLAGS) $(LFLAGS)
-
 target:	$(OBJECTS)
-	$(CXX) -o APICaller $(OBJECTS) $(FLAGS)
+	$(CXX) -o APICaller $(OBJECTS) $(DFLAGS) $(LFLAGS) $(CFLAGS)
 
 bin/%.o: src/%.cpp | bin
 	$(CXX) -c -o $@ $< $(FLAGS)
@@ -18,3 +16,9 @@ bin:
 
 clean:
 	rm -rf bin APICaller
+
+debug:	$(OBJECTS)
+	$(CXX) -o APICaller $(OBJECTS) $(DFLAGS) $(LFLAGS) $(CFLAGS)
+
+release:	$(OBJECTS)
+	$(CXX) -o APICaller $(OBJECTS) $(OFLAGS) $(LFLAGS) $(CFLAGS)
