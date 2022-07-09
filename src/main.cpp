@@ -10,6 +10,6 @@ int main(){
 		return 0;
 	}
 	const json result = ExtractDataFromJson(data);
-	DumpToFile(result, "result.json");
+	DumpToFile(result, "data/outputs/result.json");
 	return 0;
 }
