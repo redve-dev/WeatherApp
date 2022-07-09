@@ -1,8 +1,11 @@
 #include "../include/functions.hpp"
+#include <bits/chrono.h>
 #include <fstream>
 #include <curl/curl.h>
 #include <iostream>
 #include <sstream>
+#include <chrono>
+#include <filesystem>
 
 std::string ReadFromFile(const std::string& filename){
 	std::ifstream f(filename);
@@ -81,12 +84,18 @@ json ExtractDataFromJson(const json& all){
 	};
 	convert_temperatures("temp");
 	convert_temperatures("feels_like");
+	result["timestamp"]=GetUnixTimestamp();
 	return result;
 }
 
 void DumpToFile(const json& data, std::string&& filename){
 	std::ofstream f;
-	f.open("data/"+filename);
+	f.open(filename);
 	f<<data;
 	f.close();
+}
+
+int GetUnixTimestamp(){
+	const auto t = std::chrono::system_clock::now();
+	return std::chrono::duration_cast<std::chrono::seconds>(t.time_since_epoch()).count();
 }
