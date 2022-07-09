@@ -90,6 +90,9 @@ json ExtractDataFromJson(const json& all){
 
 void DumpToFile(const json& data, std::string&& filename){
 	std::ofstream f;
+	if (!std::filesystem::exists("data/outputs")){
+		std::filesystem::create_directory("data/outputs");
+	}
 	f.open(filename);
 	f<<data;
 	f.close();
